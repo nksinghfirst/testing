@@ -1,3 +1,3 @@
 def call() {
-    emailext attachLog: true, body: '', subject: 'Build for this has started', to: 'nksinghfirst@gmail.com'
+    emailext attachLog: true, body: 'test', subject: 'Build for this has started', to: 'nksinghfirst@gmail.com'
 }

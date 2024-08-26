@@ -10,7 +10,6 @@ Build Number: ${BUILD_NUMBER}
 Build URL: ${BUILD_URL}
         """,
         subject: params.subject ?: "Build ${currentBuild.result} for ${folderName}",
-        to: params.to ?: 'nksinghfirst@gmail.com',
-        from: params.from ?: 'alert@stacknize.com'
+        to: params.to ?: 'nksinghfirst@gmail.com'
     )
 }

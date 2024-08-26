@@ -4,15 +4,12 @@ def call(Map params = [:]) {
     
     emailext(
         attachLog: params.attachLog ?: true,
-        body: params.body ?: """Build status: ${currentBuild.result}.
-Please check the logs for more details.
+        body: params.body ?: """Build status: ${currentBuild.result}, Please check the logs for more details.
 Job: ${JOB_NAME}
-Folder: ${folderName}
 Build Number: ${BUILD_NUMBER}
 Build URL: ${BUILD_URL}
         """,
         subject: params.subject ?: "Build ${currentBuild.result} for ${folderName}",
-        to: params.to ?: 'nks@gmail.com',
-        from: params.from ?: 'alert@stacknize.com'
+        to: params.to ?: 'nksinghfirst@gmail.com',
     )
 }

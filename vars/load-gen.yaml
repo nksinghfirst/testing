@@ -1,0 +1,46 @@
+name: Load-gen
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'load-gen/**'
+      - '.github/workflows/load-gen.yaml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'load-gen/**'
+      - '.github/workflows/load-gen.yaml'
+jobs:
+  cart:
+    name: Build and deploy load-gen microservice
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker auth
+        run: |
+          gcloud auth configure-docker asia-south2-docker.pkg.dev
+
+      - name: Build Docker image
+        working-directory: ./load-gen
+        run: |
+          docker build -t asia-south2-docker.pkg.dev/iconic-vine-445014-t7/kubernetesproject/load-gen:latest .
+          
+      - name: Push Docker image
+        run: |
+          docker push asia-south2-docker.pkg.dev/iconic-vine-445014-t7/kubernetesproject/load-gen:latest
+
+          
